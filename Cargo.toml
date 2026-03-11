@@ -7,3 +7,8 @@ edition = "2024"
 chromiumoxide = "0.9.1"
 tokio = { version = "1", features = ["full"] }
 futures = "0.3"
+google-ai-rs = "0.3.0"
+serde = "1.0.228"
+serde_json = "1.0.149"
+dialoguer = "0.12.0"
+colored = "3.1.1"

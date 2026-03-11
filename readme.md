@@ -2,12 +2,12 @@
 
 ## TLDR
 
-App that automates linked-in. It allows to automatically connect with people, comment and react to posts.
+App that automates LinkedIn. It allows you to automatically connect with people, comment on posts, and react.
 
 ## Features
 
 - Accepts and sends connection requests.
-- Uses AI to write and react to existing posts on the feed page.
+- Uses AI to rate and write comments on posts in your feed.
 
 ## Future plans
 
