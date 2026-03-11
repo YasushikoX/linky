@@ -3,7 +3,10 @@ use std::time::Duration;
 use chromiumoxide::Page;
 use tokio::time::sleep;
 
-pub async fn connect(page: Page, connection_ammount: i8) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn connect(
+    page: &Page,
+    connection_ammount: i8,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mut count: i8 = 0;
 
     page.goto("https://www.linkedin.com/mynetwork").await?;

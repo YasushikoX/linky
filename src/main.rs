@@ -1,6 +1,5 @@
-use std::{thread::sleep, time::Duration};
-
 use chromiumoxide::cdp::browser_protocol::emulation::SetDeviceMetricsOverrideParams;
+use std::io::{self, BufRead, Write};
 
 mod browser;
 mod linkedin;
@@ -11,7 +10,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     page.goto("https://linkedin.com").await?;
 
-    // Height 140px less then window size
     page.execute(
         SetDeviceMetricsOverrideParams::builder()
             .width(1220u32)
@@ -22,9 +20,26 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     )
     .await?;
 
-    linkedin::connections::connect(page, 5).await?;
+    println!("Linky ready.");
+    println!("Commands: connect <amount>, quit");
 
-    sleep(Duration::from_secs(5));
+    let stdin = io::stdin();
+    for line in stdin.lock().lines() {
+        let line = line?;
+        let mut parts = line.trim().splitn(2, ' ');
+        let cmd = parts.next().unwrap_or("");
+        let arg: i8 = parts.next().unwrap_or("10").parse().unwrap_or(10);
+
+        match cmd {
+            "connect" => linkedin::connections::connect(&page, arg).await?,
+            "quit" => break,
+            _ => println!("Unknown command: {}", cmd),
+        }
+
+        println!("Done. Waiting for next command...");
+        print!("> ");
+        io::stdout().flush()?;
+    }
 
     b.close().await?;
     handle.await?;
