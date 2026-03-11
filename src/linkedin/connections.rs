@@ -12,6 +12,20 @@ pub async fn connect(page: Page, connection_ammount: i8) -> Result<(), Box<dyn s
 
     page.evaluate("document.querySelectorAll('iframe')[1].contentDocument.querySelector('#msg-overlay')?.remove()").await?;
 
+    // Accept Invites Logic
+    let invite_buttons = page.find_elements("button[aria-label*='Accept']").await?;
+
+    println!(
+        "Found {} people to accept invites from.",
+        invite_buttons.len()
+    );
+
+    for btn in invite_buttons {
+        btn.click().await?;
+        sleep(Duration::from_secs_f32(0.5)).await;
+    }
+
+    // New Connection Logic
     for _ in 0..(connection_ammount / 20) {
         page.evaluate("document.querySelector('main#workspace').scrollTop += 2000")
             .await?;
