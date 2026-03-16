@@ -1,4 +1,4 @@
-# 🔗 Linky
+# Linky
 
 > **Disclaimer:** I take no responsibility for how you use this software. Automating LinkedIn may violate their Terms of Service and could result in your account being restricted or banned. Use at your own risk.
 
